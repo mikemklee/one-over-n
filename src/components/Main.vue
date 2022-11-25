@@ -1,24 +1,27 @@
 <script setup>
-import { reactive } from 'vue'
+import { reactive } from "vue";
 
-const expenses = reactive([{
-  description: "Food",
-  total: 0
-}])
+const expenses = reactive([
+  {
+    description: "Food",
+    total: 0,
+  },
+]);
 
-const people = reactive([{
-  name: "John",
-  spent: 0
-}])
+const people = reactive([
+  {
+    name: "John",
+    spent: 0,
+  },
+]);
 
-
-const newPersonInitialState = { name: 'Enter name', spent: 0 }
-const newPersonState = reactive(newPersonInitialState)
+const newPersonInitialState = { name: "Enter name", spent: 0 };
+const newPersonState = reactive(newPersonInitialState);
 
 function addPerson() {
   // add new person, then reset state
-  people.push({ name: newPersonState.name, spent: newPersonState.spent})
-  newPersonState.value = newPersonInitialState
+  people.push({ name: newPersonState.name, spent: newPersonState.spent });
+  newPersonState.value = newPersonInitialState;
 }
 </script>
 
@@ -57,9 +60,6 @@ function addPerson() {
     </div>
     <button @click="addPerson">Save</button>
   </div>
-
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
