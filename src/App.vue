@@ -1,7 +1,5 @@
 <script setup>
 import Main from "./components/Main.vue";
-
-const test = "blah";
 </script>
 
 <template>

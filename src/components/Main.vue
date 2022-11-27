@@ -8,6 +8,18 @@ const expenses = reactive([
   },
 ]);
 
+const newExpenseInitialState = { description: "Enter description", total: 0 };
+const newExpenseState = reactive(newExpenseInitialState);
+
+function addExpense() {
+  // add new expense, then reset state
+  people.push({
+    description: newExpenseState.description,
+    total: newExpenseState.total,
+  });
+  newExpenseState.value = newExpenseInitialState;
+}
+
 const people = reactive([
   {
     name: "John",
@@ -28,37 +40,38 @@ function addPerson() {
 <template>
   <h1>1 / N</h1>
 
-  <div>
-    <h3>Expenses</h3>
-    <div v-for="item in expenses">
-      <div>
+  <div class="border border-purple-300 relative">
+    <div class="border border-gray-300 flex ml-48">
+      <div v-for="(item, i) in expenses" :key="i" class="flex flex-col h-14">
         <input v-model="item.description" />
-      </div>
-      <div>
         <input v-model="item.total" />
       </div>
     </div>
-  </div>
 
-  <div>
-    <h3>People</h3>
-    <div v-for="person in people">
-      <div>
-        <input v-model="person.name" />
-      </div>
-      <div>
-        <input v-model="person.spent" />
+    <div class="border border-gray-300 flex flex-col">
+      <div v-for="(person, index) in people" :key="index" class="flex">
+        <div class="border border-yellow-500 flex flex-col w-48">
+          <input v-model="person.name" />
+          <input v-model="person.spent" />
+        </div>
+        <div class="border border-pink-500 flex-grow">
+          <div v-for="(item, j) in expenses" :key="j">
+            <input type="checkbox" />
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+    <div class="flex flex-col absolute right-[-12rem] top-0">
+      <input v-model="newExpenseState.description" />
+      <input v-model="newExpenseState.total" />
+      <button @click="addExpense">+</button>
+    </div>
 
-  <div>
-    <h3>Add new person</h3>
-    <div>
+    <div class="flex flex-col absolute">
       <input v-model="newPersonState.name" />
       <input v-model="newPersonState.spent" />
+      <button @click="addPerson">+</button>
     </div>
-    <button @click="addPerson">Save</button>
   </div>
 </template>
 
