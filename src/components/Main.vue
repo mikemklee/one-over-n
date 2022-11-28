@@ -3,8 +3,16 @@ import { reactive, computed } from "vue";
 
 const expenses = reactive([
   {
-    description: "Food",
-    total: 0,
+    description: "Drinks",
+    total: 135.3,
+  },
+  {
+    description: "Tokyo sushi",
+    total: 214.25,
+  },
+  {
+    description: "Pizza",
+    total: 50.49,
   },
 ]);
 
@@ -22,7 +30,31 @@ function addExpense() {
 
 const people = reactive([
   {
-    name: "John",
+    name: "Min",
+    spent: 0,
+  },
+  {
+    name: "Hya",
+    spent: 0,
+  },
+  {
+    name: "Jess",
+    spent: 0,
+  },
+  {
+    name: "So",
+    spent: 0,
+  },
+  {
+    name: "Darren",
+    spent: 0,
+  },
+  {
+    name: "Bum",
+    spent: 0,
+  },
+  {
+    name: "Mun",
     spent: 0,
   },
 ]);
@@ -40,9 +72,14 @@ const expensePerPersonMatrix = computed(() => {
   const matrix = [];
 
   for (let i = 0; i < people.length; i++) {
-    const row = [];
+    const row = []; // hold expense per person
     for (let j = 0; j < expenses.length; j++) {
-      row.push(expenses[j]);
+      const expense = expenses[j];
+
+      const expensePerPerson = parseFloat(
+        expense.total / people.length
+      ).toFixed(2);
+      row.push(expensePerPerson);
     }
     matrix.push(row);
   }
@@ -75,14 +112,25 @@ const expensePerPersonMatrix = computed(() => {
     </div>
 
     <div class="col-start-2 col-end-auto row-start-2 flex flex-col">
-      <div v-for="(row, rowIdx) in expensePerPersonMatrix" :key="rowIdx">
+      <div
+        v-for="(expensesPerPerson, rowIdx) in expensePerPersonMatrix"
+        :key="rowIdx"
+      >
         <div class="flex-grow flex">
           <div
-            v-for="(item, j) in row"
+            v-for="(expensePerPerson, j) in expensesPerPerson"
             :key="j"
             class="cell flex justify-center items-center"
           >
-            {{ parseFloat(item.total / people.length).toFixed(2) }}
+            {{ expensePerPerson }}
+          </div>
+
+          <div class="absolute left-[100%] cell border border-green-200">
+            {{
+              expensesPerPerson.reduce((acc, amount) => {
+                return acc + parseFloat(amount);
+              }, 0)
+            }}
           </div>
         </div>
       </div>
