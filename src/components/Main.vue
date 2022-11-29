@@ -3,6 +3,7 @@ import { reactive, computed } from "vue";
 
 import Cell from "./Cell.vue";
 import AddButton from "./AddButton.vue";
+import RemoveButton from "./RemoveButton.vue";
 
 const expenses = reactive([
   {
@@ -25,6 +26,10 @@ function addExpense() {
 
   // amend excluded matrix
   excludedMatrix.push(Array(expenses.length).fill(false));
+}
+
+function removeExpense(expenseIdx) {
+  console.log("remove expense!", expenseIdx);
 }
 
 const people = reactive([
@@ -66,6 +71,10 @@ function addPerson() {
   for (let expenseIdx = 0; expenseIdx < expenses.length; expenseIdx++) {
     excludedMatrix[expenseIdx].push(false);
   }
+}
+
+function removePerson(personIdx) {
+  console.log("remove person!", personIdx);
 }
 
 function generateExcludedMatrix() {
@@ -125,17 +134,27 @@ const expensePerPersonMatrix = computed(() => {
       <span>calculator</span>
     </div>
     <div class="flex col-start-2 col-end-auto">
-      <Cell v-for="(item, i) in expenses" :key="i" class="flex flex-col">
-        <input v-model="item.description" class="editable" />
-        <input v-model="item.total" class="editable" />
+      <Cell
+        v-for="(expense, expenseIdx) in expenses"
+        :key="expenseIdx"
+        class="flex"
+      >
+        <div class="self-stretch">
+          <input v-model="expense.description" class="editable" />
+          <input v-model="expense.total" class="editable" />
+        </div>
+        <RemoveButton @click="removeExpense(expenseIdx)" />
       </Cell>
     </div>
 
     <div class="flex flex-col col-span-1 row-span-1">
-      <div v-for="(person, index) in people" :key="index" class="flex">
-        <Cell class="flex flex-col">
-          <input v-model="person.name" class="editable" />
-          <input v-model="person.spent" class="editable" />
+      <div v-for="(person, personIdx) in people" :key="personIdx" class="flex">
+        <Cell class="flex">
+          <div class="self-stretch">
+            <input v-model="person.name" class="editable" />
+            <input v-model="person.spent" class="editable" />
+          </div>
+          <RemoveButton @click="removeExpense(expenseIdx)" />
         </Cell>
       </div>
     </div>
