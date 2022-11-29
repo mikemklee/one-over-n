@@ -2,6 +2,7 @@
 import { reactive, computed, onMounted } from "vue";
 
 import Cell from "./Cell.vue";
+import AddButton from "./AddButton.vue";
 
 const expenses = reactive([
   {
@@ -178,11 +179,13 @@ const expensePerPersonMatrix = computed(() => {
       </div>
     </div>
 
-    <button class="btn absolute right-0 bottom-[100%]" @click="addExpense">
+    <AddButton class="absolute right-0 bottom-[100%]" @click="addExpense">
       +
-    </button>
+    </AddButton>
 
-    <button class="btn absolute left-0 top-[100%]" @click="addPerson">+</button>
+    <AddButton class="absolute left-0 top-[100%]" @click="addPerson">
+      +
+    </AddButton>
   </div>
 </template>
 
@@ -197,14 +200,5 @@ const expensePerPersonMatrix = computed(() => {
   height: 50%;
   padding-left: 10px;
   padding-right: 10px;
-}
-
-.btn {
-  width: 10rem;
-  height: 2rem;
-  background-color: #747474;
-}
-.btn:hover {
-  background-color: #414141;
 }
 </style>
