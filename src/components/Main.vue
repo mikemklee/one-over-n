@@ -174,7 +174,7 @@ const expensePerPersonMatrix = computed(() => {
           <Cell
             v-for="(expensePerPerson, expenseIdx) in expensesPerPerson"
             :key="expenseIdx"
-            class="flex justify-center items-center"
+            class="flex justify-center items-center cursor-pointer transition-all hover:bg-gray-600"
             @click="excludePersonFromExpense(personIdx, expenseIdx)"
           >
             {{ expensePerPerson }}
