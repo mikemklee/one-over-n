@@ -138,6 +138,17 @@ const expensePerPersonMatrix = computed(() => {
       <span>calculator</span>
     </div>
     <div class="flex col-start-2 col-end-auto">
+      <div v-for="(person, personIdx) in people" :key="personIdx" class="flex">
+        <Cell class="flex items-stretch">
+          <div class="flex flex-col">
+            <Editable v-model="person.name" />
+          </div>
+          <RemoveButton @click="removePerson(personIdx)" />
+        </Cell>
+      </div>
+    </div>
+
+    <div class="flex flex-col col-span-1 row-span-1">
       <Cell
         v-for="(expense, expenseIdx) in expenses"
         :key="expenseIdx"
@@ -154,23 +165,12 @@ const expensePerPersonMatrix = computed(() => {
       </Cell>
     </div>
 
-    <div class="flex flex-col col-span-1 row-span-1">
-      <div v-for="(person, personIdx) in people" :key="personIdx" class="flex">
-        <Cell class="flex items-stretch">
-          <div class="flex flex-col">
-            <Editable v-model="person.name" />
-          </div>
-          <RemoveButton @click="removePerson(personIdx)" />
-        </Cell>
-      </div>
-    </div>
-
-    <div class="col-start-2 col-end-auto row-start-2 flex flex-col">
+    <div class="col-start-2 col-end-auto row-start-2 flex">
       <div
         v-for="(expensesPerPerson, personIdx) in expensePerPersonMatrix"
         :key="personIdx"
       >
-        <div class="flex-grow flex">
+        <div class="flex-grow flex flex-col">
           <Cell
             v-for="(expensePerPerson, expenseIdx) in expensesPerPerson"
             :key="expenseIdx"
@@ -180,7 +180,7 @@ const expensePerPersonMatrix = computed(() => {
             {{ expensePerPerson }}
           </Cell>
 
-          <Cell class="absolute left-[100%]" :withBorder="false">
+          <Cell class="absolute top-[100%]" :withBorder="false">
             {{
               parseFloat(
                 expensesPerPerson.reduce((acc, amount) => {
@@ -193,11 +193,11 @@ const expensePerPersonMatrix = computed(() => {
       </div>
     </div>
 
-    <AddButton class="absolute right-0 bottom-[100%]" @click="addExpense">
+    <AddButton class="absolute right-0 bottom-[100%]" @click="addPerson">
       +
     </AddButton>
 
-    <AddButton class="absolute left-0 top-[100%]" @click="addPerson">
+    <AddButton class="absolute left-0 top-[100%]" @click="addExpense">
       +
     </AddButton>
   </div>
