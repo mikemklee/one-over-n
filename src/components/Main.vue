@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, computed } from "vue";
+import { reactive, computed, onMounted } from "vue";
 
 import Cell from "./Cell.vue";
 
@@ -28,6 +28,10 @@ function addExpense() {
     total: newExpenseState.total,
   });
   newExpenseState.value = newExpenseInitialState;
+
+  // amend excluded matrix
+
+  // amend expenses matrix
 }
 
 const people = reactive([
@@ -68,20 +72,54 @@ function addPerson() {
   // add new person, then reset state
   people.push({ name: newPersonState.name, spent: newPersonState.spent });
   newPersonState.value = newPersonInitialState;
+
+  // amend excluded matrix
+
+  // amend expenses matrix
+}
+
+function generateExcludedMatrix() {
+  const matrix = [];
+
+  for (let expenseIdx = 0; expenseIdx < expenses.length; expenseIdx++) {
+    const row = []; // hold info on who is excluded from given expense
+    for (let personIdx = 0; personIdx < people.length; personIdx++) {
+      row.push(false);
+    }
+    matrix.push(row);
+  }
+
+  return matrix;
+}
+
+const excludedMatrix = reactive(generateExcludedMatrix());
+
+function excludePersonFromExpense(personIdx, expenseIdx) {
+  excludedMatrix[expenseIdx][personIdx] =
+    !excludedMatrix[expenseIdx][personIdx];
 }
 
 const expensePerPersonMatrix = computed(() => {
   const matrix = [];
 
-  for (let i = 0; i < people.length; i++) {
+  for (let personIdx = 0; personIdx < people.length; personIdx++) {
     const row = []; // hold expense per person
-    for (let j = 0; j < expenses.length; j++) {
-      const expense = expenses[j];
+    for (let expenseIdx = 0; expenseIdx < expenses.length; expenseIdx++) {
+      const expense = expenses[expenseIdx];
+
+      const numExcluded = excludedMatrix[expenseIdx].reduce((acc, cur) => {
+        return cur === true ? acc + 1 : acc;
+      }, 0);
 
       const expensePerPerson = parseFloat(
-        expense.total / people.length
+        expense.total / (people.length - numExcluded)
       ).toFixed(2);
-      row.push(expensePerPerson);
+
+      if (excludedMatrix[expenseIdx][personIdx]) {
+        row.push("-");
+      } else {
+        row.push(expensePerPerson);
+      }
     }
     matrix.push(row);
   }
@@ -122,15 +160,18 @@ const expensePerPersonMatrix = computed(() => {
             v-for="(expensePerPerson, expenseIdx) in expensesPerPerson"
             :key="expenseIdx"
             class="flex justify-center items-center"
+            @click="excludePersonFromExpense(personIdx, expenseIdx)"
           >
             {{ expensePerPerson }}
           </Cell>
 
           <Cell class="absolute left-[100%]" :withBorder="false">
             {{
-              expensesPerPerson.reduce((acc, amount) => {
-                return acc + parseFloat(amount);
-              }, 0)
+              parseFloat(
+                expensesPerPerson.reduce((acc, amount) => {
+                  return amount !== "-" ? acc + parseFloat(amount) : acc;
+                }, 0)
+              ).toFixed(2)
             }}
           </Cell>
         </div>
