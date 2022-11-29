@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, computed, onMounted } from "vue";
+import { reactive, computed } from "vue";
 
 import Cell from "./Cell.vue";
 import AddButton from "./AddButton.vue";
@@ -19,20 +19,12 @@ const expenses = reactive([
   },
 ]);
 
-const newExpenseInitialState = { description: "Enter description", total: 0 };
-const newExpenseState = reactive(newExpenseInitialState);
-
 function addExpense() {
-  // add new expense, then reset state
-  expenses.push({
-    description: newExpenseState.description,
-    total: newExpenseState.total,
-  });
-  newExpenseState.value = newExpenseInitialState;
+  // add new expense
+  expenses.push({ description: "Expense", total: 0 });
 
   // amend excluded matrix
-
-  // amend expenses matrix
+  excludedMatrix.push(Array(expenses.length).fill(false));
 }
 
 const people = reactive([
@@ -66,17 +58,14 @@ const people = reactive([
   },
 ]);
 
-const newPersonInitialState = { name: "Enter name", spent: 0 };
-const newPersonState = reactive(newPersonInitialState);
-
 function addPerson() {
-  // add new person, then reset state
-  people.push({ name: newPersonState.name, spent: newPersonState.spent });
-  newPersonState.value = newPersonInitialState;
+  // add new person
+  people.push({ name: "Person", spent: 0 });
 
   // amend excluded matrix
-
-  // amend expenses matrix
+  for (let expenseIdx = 0; expenseIdx < expenses.length; expenseIdx++) {
+    excludedMatrix[expenseIdx].push(false);
+  }
 }
 
 function generateExcludedMatrix() {
