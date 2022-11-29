@@ -1,6 +1,8 @@
 <script setup>
 import { reactive, computed } from "vue";
 
+import Cell from "./Cell.vue";
+
 const expenses = reactive([
   {
     description: "Drinks",
@@ -89,60 +91,57 @@ const expensePerPersonMatrix = computed(() => {
 </script>
 
 <template>
-  <h1 class="text-left mb-10">1 / N</h1>
-
   <div class="relative table-layout">
-    <div class="col-span-1 cell">
-      <!-- placeholder for layout -->
+    <div class="flex flex-col col-span-1 pt-2">
+      <span class="text-[30px]">1 / N</span>
+      <span>calculator</span>
     </div>
     <div class="flex col-start-2 col-end-auto">
-      <div v-for="(item, i) in expenses" :key="i" class="flex flex-col cell">
+      <Cell v-for="(item, i) in expenses" :key="i" class="flex flex-col">
         <input v-model="item.description" class="editable" />
         <input v-model="item.total" class="editable" />
-      </div>
+      </Cell>
     </div>
 
     <div class="flex flex-col col-span-1 row-span-1">
       <div v-for="(person, index) in people" :key="index" class="flex">
-        <div class="flex flex-col cell">
+        <Cell class="flex flex-col">
           <input v-model="person.name" class="editable" />
           <input v-model="person.spent" class="editable" />
-        </div>
+        </Cell>
       </div>
     </div>
 
     <div class="col-start-2 col-end-auto row-start-2 flex flex-col">
       <div
-        v-for="(expensesPerPerson, rowIdx) in expensePerPersonMatrix"
-        :key="rowIdx"
+        v-for="(expensesPerPerson, personIdx) in expensePerPersonMatrix"
+        :key="personIdx"
       >
         <div class="flex-grow flex">
-          <div
-            v-for="(expensePerPerson, j) in expensesPerPerson"
-            :key="j"
-            class="cell flex justify-center items-center"
+          <Cell
+            v-for="(expensePerPerson, expenseIdx) in expensesPerPerson"
+            :key="expenseIdx"
+            class="flex justify-center items-center"
           >
             {{ expensePerPerson }}
-          </div>
+          </Cell>
 
-          <div class="absolute left-[100%] cell border border-green-200">
+          <Cell class="absolute left-[100%]" :withBorder="false">
             {{
               expensesPerPerson.reduce((acc, amount) => {
                 return acc + parseFloat(amount);
               }, 0)
             }}
-          </div>
+          </Cell>
         </div>
       </div>
     </div>
 
-    <div class="flex flex-col absolute left-[100%] top-0">
-      <button class="btn" @click="addExpense">+</button>
-    </div>
+    <button class="btn absolute right-0 bottom-[100%]" @click="addExpense">
+      +
+    </button>
 
-    <div class="absolute right-[100%] bottom-0">
-      <button class="btn" @click="addPerson">+</button>
-    </div>
+    <button class="btn absolute left-0 top-[100%]" @click="addPerson">+</button>
   </div>
 </template>
 
@@ -150,12 +149,6 @@ const expensePerPersonMatrix = computed(() => {
 .table-layout {
   display: grid;
   grid-template-columns: auto 1fr;
-}
-
-.cell {
-  border: 1px solid #414141;
-  width: 10rem;
-  height: 4rem;
 }
 
 .editable {
@@ -166,8 +159,8 @@ const expensePerPersonMatrix = computed(() => {
 }
 
 .btn {
-  width: 2rem;
-  height: 4rem;
+  width: 10rem;
+  height: 2rem;
   background-color: #747474;
 }
 .btn:hover {
