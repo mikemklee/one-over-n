@@ -58,10 +58,6 @@ const people = reactive([
     name: "Snape",
     spent: 0,
   },
-  {
-    name: "Sirius",
-    spent: 0,
-  },
 ]);
 
 function addPerson() {
@@ -153,6 +149,7 @@ const expensePerPersonMatrix = computed(() => {
         v-for="(expense, expenseIdx) in expenses"
         :key="expenseIdx"
         class="flex items-stretch"
+        size="l"
       >
         <div class="flex flex-col">
           <Editable v-model="expense.description" />
@@ -193,11 +190,11 @@ const expensePerPersonMatrix = computed(() => {
       </div>
     </div>
 
-    <AddButton class="absolute right-0 bottom-[100%]" @click="addPerson">
+    <AddButton size="l" class="absolute left-0 top-[100%]" @click="addExpense">
       +
     </AddButton>
 
-    <AddButton class="absolute left-0 top-[100%]" @click="addExpense">
+    <AddButton class="absolute right-0 bottom-[100%]" @click="addPerson">
       +
     </AddButton>
   </div>

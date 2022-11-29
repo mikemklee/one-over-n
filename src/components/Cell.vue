@@ -4,6 +4,10 @@ defineProps({
     type: Boolean,
     default: true,
   },
+  size: {
+    type: String,
+    default: "m",
+  },
 });
 </script>
 
@@ -13,6 +17,8 @@ defineProps({
     :class="{
       border: withBorder,
       'border-gray-600': true,
+      'w-56': size === 'l',
+      'w-36': size === 'm',
     }"
   >
     <slot />
