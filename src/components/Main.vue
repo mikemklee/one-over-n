@@ -4,6 +4,7 @@ import { reactive, computed } from "vue";
 import Cell from "./Cell.vue";
 import AddButton from "./AddButton.vue";
 import RemoveButton from "./RemoveButton.vue";
+import Editable from "./Editable.vue";
 
 const expenses = reactive([
   {
@@ -65,7 +66,10 @@ const people = reactive([
 
 function addPerson() {
   // add new person
-  people.push({ name: "Person", spent: 0 });
+  people.push({
+    name: "Person",
+    spent: 0, // TODO: use pre-spending amounts?
+  });
 
   // amend excluded matrix
   for (let expenseIdx = 0; expenseIdx < expenses.length; expenseIdx++) {
@@ -137,11 +141,14 @@ const expensePerPersonMatrix = computed(() => {
       <Cell
         v-for="(expense, expenseIdx) in expenses"
         :key="expenseIdx"
-        class="flex"
+        class="flex items-stretch"
       >
-        <div class="self-stretch">
-          <input v-model="expense.description" class="editable" />
-          <input v-model="expense.total" class="editable" />
+        <div class="flex flex-col">
+          <Editable v-model="expense.description" />
+          <Editable
+            v-model="expense.total"
+            class="border-t-[1px] border-gray-600"
+          />
         </div>
         <RemoveButton @click="removeExpense(expenseIdx)" />
       </Cell>
@@ -149,12 +156,11 @@ const expensePerPersonMatrix = computed(() => {
 
     <div class="flex flex-col col-span-1 row-span-1">
       <div v-for="(person, personIdx) in people" :key="personIdx" class="flex">
-        <Cell class="flex">
-          <div class="self-stretch">
-            <input v-model="person.name" class="editable" />
-            <input v-model="person.spent" class="editable" />
+        <Cell class="flex items-stretch">
+          <div class="flex flex-col">
+            <Editable v-model="person.name" />
           </div>
-          <RemoveButton @click="removeExpense(expenseIdx)" />
+          <RemoveButton @click="removePerson(personIdx)" />
         </Cell>
       </div>
     </div>

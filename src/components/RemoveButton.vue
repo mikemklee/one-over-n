@@ -1,5 +1,7 @@
 <template>
-  <button class="transition-all bg-gray-600 hover:bg-gray-500 w-8 h-[100%]">
+  <button
+    class="box-border transition-all bg-rose-900 opacity-20 hover:opacity-100 w-8"
+  >
     x
   </button>
 </template>

@@ -9,7 +9,7 @@ defineProps({
 
 <template>
   <div
-    class="w-40 h-16 flex justify-center items-center"
+    class="w-40 h-14 flex justify-center items-center"
     :class="{
       border: withBorder,
       'border-gray-600': true,
