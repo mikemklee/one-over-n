@@ -7,5 +7,6 @@ module.exports = {
     // 0 = off, 1 = warn, 2 = error
     "vue/no-unused-vars": 1,
     "vue/multi-word-component-names": 1,
+    "vue/attribute-hyphenation": 0,
   },
 };
