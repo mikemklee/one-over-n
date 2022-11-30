@@ -74,7 +74,11 @@ function addPerson() {
 }
 
 function removePerson(personIdx) {
-  console.log("remove person!", personIdx);
+  people.splice(personIdx, 1);
+
+  excludedMatrix.forEach((row) => {
+    row.splice(personIdx, 1);
+  });
 }
 
 function generateExcludedMatrix() {
