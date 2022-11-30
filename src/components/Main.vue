@@ -8,16 +8,12 @@ import Editable from "./Editable.vue";
 
 const expenses = reactive([
   {
-    description: "Butterbeer",
-    total: 135.3,
+    description: "Drinks",
+    total: 123.5,
   },
   {
-    description: "Polyfuice Potion",
-    total: 214.25,
-  },
-  {
-    description: "Fizzing Whizzbees",
-    total: 50.49,
+    description: "Food",
+    total: 231.67,
   },
 ]);
 
@@ -37,27 +33,15 @@ function removeExpense(expenseIdx) {
 
 const people = reactive([
   {
-    name: "Harry",
+    name: "Olivia",
     spent: 0,
   },
   {
-    name: "Hermione",
+    name: "Chris",
     spent: 0,
   },
   {
-    name: "Ron",
-    spent: 0,
-  },
-  {
-    name: "Voldemort",
-    spent: 0,
-  },
-  {
-    name: "Dumbledore",
-    spent: 0,
-  },
-  {
-    name: "Snape",
+    name: "Mike",
     spent: 0,
   },
 ]);
