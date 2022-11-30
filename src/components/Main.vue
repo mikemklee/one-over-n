@@ -152,11 +152,11 @@ const expensePerPersonMatrix = computed(() => {
         size="l"
       >
         <div class="flex flex-col">
-          <Editable v-model="expense.description" />
           <Editable
-            v-model="expense.total"
-            class="border-t-[1px] border-gray-600"
+            v-model="expense.description"
+            class="border-t-[1px] border-[#66668b]"
           />
+          <Editable v-model="expense.total" />
         </div>
         <RemoveButton @click="removeExpense(expenseIdx)" />
       </Cell>
@@ -171,13 +171,13 @@ const expensePerPersonMatrix = computed(() => {
           <Cell
             v-for="(expensePerPerson, expenseIdx) in expensesPerPerson"
             :key="expenseIdx"
-            class="flex justify-center items-center cursor-pointer transition-all hover:bg-gray-600"
+            class="flex justify-center items-center cursor-pointer transition-all hover:bg-[#66668b] border-r-[1px] border-b-[1px] border-[#66668b]"
             @click="excludePersonFromExpense(personIdx, expenseIdx)"
           >
             {{ expensePerPerson }}
           </Cell>
 
-          <Cell class="absolute top-[100%]" :withBorder="false">
+          <Cell class="absolute top-[100%] font-bold">
             {{
               parseFloat(
                 expensesPerPerson.reduce((acc, amount) => {
@@ -204,12 +204,5 @@ const expensePerPersonMatrix = computed(() => {
 .table-layout {
   display: grid;
   grid-template-columns: auto 1fr;
-}
-
-.editable {
-  width: 100%;
-  height: 50%;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 </style>

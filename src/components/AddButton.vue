@@ -9,7 +9,7 @@ defineProps({
 
 <template>
   <button
-    class="box-border transition-all bg-gray-600 opacity-20 hover:opacity-100 h-8"
+    class="transition-all bg-[#66668b] opacity-50 hover:opacity-100 h-8"
     :class="{
       'w-56': size === 'l',
       'w-36': size === 'm',
