@@ -118,11 +118,14 @@ const expensePerPersonMatrix = computed(() => {
 </script>
 
 <template>
-  <div class="relative table-layout">
+  <div class="my-auto relative grid grid-cols-1">
+    <!-- App title -->
     <div class="flex flex-col col-span-1 pt-2">
       <span class="text-[30px]">1 / N</span>
       <span>calculator</span>
     </div>
+
+    <!-- Header for people -->
     <div class="flex col-start-2 col-end-auto">
       <div v-for="(person, personIdx) in people" :key="personIdx" class="flex">
         <Cell class="flex items-stretch">
@@ -134,6 +137,7 @@ const expensePerPersonMatrix = computed(() => {
       </div>
     </div>
 
+    <!-- Header for expenses -->
     <div class="flex flex-col col-span-1 row-span-1">
       <Cell
         v-for="(expense, expenseIdx) in expenses"
@@ -152,6 +156,7 @@ const expensePerPersonMatrix = computed(() => {
       </Cell>
     </div>
 
+    <!-- Expense per person -->
     <div class="col-start-2 col-end-auto row-start-2 flex">
       <div
         v-for="(expensesPerPerson, personIdx) in expensePerPersonMatrix"
@@ -180,19 +185,19 @@ const expensePerPersonMatrix = computed(() => {
       </div>
     </div>
 
-    <AddButton size="l" class="absolute left-0 top-[100%]" @click="addExpense">
-      +
-    </AddButton>
-
-    <AddButton class="absolute right-0 bottom-[100%]" @click="addPerson">
-      +
-    </AddButton>
+    <!-- Buttons -->
+    <AddButton
+      size="l"
+      class="absolute left-0 top-[100%]"
+      @click="addExpense"
+    />
+    <AddButton class="absolute right-0 bottom-[100%]" @click="addPerson" />
   </div>
+
+  <section>
+    Made with ☕ by
+    <a href="https://github.com/leemun1/one-over-n" target="_blank">@leemun1</a>
+  </section>
 </template>
 
-<style scoped>
-.table-layout {
-  display: grid;
-  grid-template-columns: auto 1fr;
-}
-</style>
+<style scoped></style>
