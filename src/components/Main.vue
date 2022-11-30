@@ -30,7 +30,9 @@ function addExpense() {
 }
 
 function removeExpense(expenseIdx) {
-  console.log("remove expense!", expenseIdx);
+  expenses.splice(expenseIdx, 1);
+
+  excludedMatrix.splice(expenseIdx, 1);
 }
 
 const people = reactive([
