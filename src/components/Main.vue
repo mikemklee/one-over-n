@@ -196,7 +196,7 @@ const expensePerPersonMatrix = computed(() => {
 
   <section>
     Made with ☕ by
-    <a href="https://github.com/leemun1/one-over-n" target="_blank">@leemun1</a>
+    <a href="https://github.com/mikemklee/one-over-n" target="_blank">@leemun1</a>
   </section>
 </template>
 
