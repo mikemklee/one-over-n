@@ -1,6 +1,6 @@
 ## One over N (1 / N)
 
-### [Live preview](https://mikemkelee.github.io/one-over-n/)
+### [Live preview](https://mikemklee.github.io/one-over-n/)
 
 Have expenses to divide up among a party?
 
